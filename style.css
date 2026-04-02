@@ -1,0 +1,62 @@
+/* GLASSMORPHISM & UTILS */
+.glass-panel {
+    background: rgba(10, 10, 10, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+.font-z { font-family: 'Orbitron', sans-serif; }
+
+/* INPUTS */
+.z-input {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 16px 24px;
+    color: white;
+    outline: none;
+    transition: all 0.3s ease;
+}
+.z-input:focus {
+    border-color: #00FFFF;
+    background: rgba(0, 255, 255, 0.02);
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+}
+
+/* CHAT BUBBLES */
+.bubble-sent {
+    background: linear-gradient(135deg, rgba(0,255,255,0.15), rgba(0,255,255,0.02));
+    border: 1px solid rgba(0,255,255,0.3);
+    border-radius: 20px 20px 4px 20px;
+    box-shadow: 0 5px 15px rgba(0,255,255,0.05);
+}
+
+.bubble-received {
+    background: linear-gradient(135deg, rgba(191,0,255,0.15), rgba(191,0,255,0.02));
+    border: 1px solid rgba(191,0,255,0.3);
+    border-radius: 20px 20px 20px 4px;
+    box-shadow: 0 5px 15px rgba(191,0,255,0.05);
+}
+
+/* MESSAGE ANIMATION */
+.msg-enter {
+    animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* HIGHLIGHT WORDS */
+.highlight-word {
+    background: rgba(255, 0, 0, 0.2);
+    color: #ff4444;
+    padding: 0 4px;
+    border-radius: 4px;
+    font-weight: bold;
+    border: 1px solid rgba(255,0,0,0.5);
+}
