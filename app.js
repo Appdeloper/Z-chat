@@ -47,44 +47,40 @@ const typingIndicator = document.getElementById('typing-indicator');
 // Icons Initialize
 lucide.createIcons();
 
-// =====================================================================
-// 1. AUTHENTICATION (Anonymous + LocalStorage)
-// =====================================================================
-onAuthStateChanged(auth, (user) => {
-    if (user && currentUsername) {
-        // User is logged in
-        authScreen.classList.add('hidden');
-        appScreen.classList.remove('hidden');
-        displayUsername.innerText = `@${currentUsername}`;
-        updateStreak();
-        loadRooms();
-        listenForMessages();
-    } else {
-        // User needs to login
-        authScreen.classList.remove('hidden');
-        appScreen.classList.add('hidden');
-    }
-});
+// --- 5. AUTHENTICATION ENGINE ---
 
-loginBtn.addEventListener('click', async () => {
-    const name = usernameInput.value.trim();
-    if (name.length < 3) return alert("Username must be at least 3 characters.");
-    
-    currentUsername = name;
-    localStorage.setItem('og_username', name);
+// Access System (Login) - Isko window object mein daalna zaroori hai
+window.accessSystem = async () => {
+    const email = authEmail.value.trim();
+    const pass = authPass.value.trim();
+    if (!email || !pass) return alert("Email aur Password dalo!");
     
     try {
-        await signInAnonymously(auth);
-    } catch (error) {
-        alert("System Error: " + error.message);
-    }
-});
+        await signInWithEmailAndPassword(auth, email, pass);
+    } catch (err) { alert("ACCESS DENIED: " + err.message); }
+};
 
-document.getElementById('logout-btn').addEventListener('click', () => {
-    localStorage.removeItem('og_username');
-    currentUsername = null;
-    signOut(auth);
-});
+// Initialize New Account (Signup)
+window.initAccount = async () => {
+    const email = authEmail.value.trim();
+    const pass = authPass.value.trim();
+    if (!email || !pass) return alert("Details fill karo!");
+
+    try {
+        await createUserWithEmailAndPassword(auth, email, pass);
+        alert("Account Created! Ab Access System par click karo.");
+    } catch (err) { alert("INITIALIZATION FAILED: " + err.message); }
+};
+
+// Google Sign-In
+window.signInWithGoogle = async () => {
+    try {
+        await signInWithPopup(auth, googleProvider);
+    } catch (err) { alert("GOOGLE AUTH ERROR: " + err.message); }
+};
+
+// Logout aur Exit
+window.exitSystem = () => signOut(auth);
 
 // =====================================================================
 // 2. ROOM MANAGEMENT
